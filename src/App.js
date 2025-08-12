@@ -13,13 +13,15 @@ import { Routes, Route } from 'react-router-dom'
 
 function App() {
  
+const [searchValue, SetSerchValue] = React.useState('')
+
   return (
     <div class="wrapper">
-      <Header />
+      <Header searchValue ={searchValue} SetSerchValue = {SetSerchValue} />
       <div class="content">
         
           <Routes>
-            <Route path='/' element= {<Home />} />
+            <Route path='/' element= {<Home searchValue ={searchValue} />} />
             <Route path='cart' element= {<Cart />} />
             <Route path='*' element= {<Notfound />} />
           </Routes>
