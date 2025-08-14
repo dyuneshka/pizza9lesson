@@ -3,8 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { SetSort } from "./redux/slices/filterSlice";
 
-const Sort = ({ value, onChangeSort }) => {
-  const Sort = [
+export const Sortlist = [
     {
       name: "популярности",
       sortProperty: "rating",
@@ -31,6 +30,9 @@ const Sort = ({ value, onChangeSort }) => {
     },
   ];
 
+const Sort = ({ value, onChangeSort }) => {
+
+
   const sort = useSelector(state => state.filter.sort)
 
   const [open, Setopen] = React.useState(false);
@@ -40,8 +42,30 @@ const Sort = ({ value, onChangeSort }) => {
     Setopen(!open);
   };
 
+  const sortRef = React.useRef()
+
+  React.useEffect(() => {
+
+    const handClickPopup = (event) => {
+      if(!event.composedPath().includes(sortRef.current)){
+         Setopen(false);
+         console.log('123')
+      }    
+
+    }
+
+     document.body.addEventListener('click', handClickPopup)
+
+     return () => {
+      document.body.removeEventListener('click', handClickPopup)
+     }
+
+  }, [])
+
+
+
   return (
-    <div class="sort">
+    <div ref = {sortRef} class="sort">
       <div class="sort__label">
         <svg
           width="10"
@@ -61,7 +85,7 @@ const Sort = ({ value, onChangeSort }) => {
       {open && (
         <div class="sort__popup">
           <ul>
-            {Sort.map((obj, i) => (
+            {Sortlist.map((obj, i) => (
               <li
                 key={i}
                 onClick={() => onClickSelect(obj)}
