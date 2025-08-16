@@ -1,6 +1,4 @@
 import React from 'react'
-
-
 import './scss/app.scss'
 
 import Header from "./components/Header"
@@ -13,15 +11,13 @@ import { Routes, Route } from 'react-router-dom'
 
 function App() {
  
-const [searchValue, SetSerchValue] = React.useState('')
-
   return (
     <div class="wrapper">
-      <Header searchValue ={searchValue} SetSerchValue = {SetSerchValue} />
+      <Header />
       <div class="content">
         
           <Routes>
-            <Route path='/' element= {<Home searchValue ={searchValue} />} />
+            <Route path='/' element= {<Home  />} />
             <Route path='cart' element= {<Cart />} />
             <Route path='*' element= {<Notfound />} />
           </Routes>

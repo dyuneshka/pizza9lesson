@@ -1,31 +1,33 @@
 import React from "react";
 import styles from "./Search.module.scss";
-
 import debounce from "lodash.debounce";
 
-const Search = ({ searchValue, SetSerchValue }) => {
-  const [value, SetValue] = React.useState('')
+import { SetSerchValue } from "../redux/slices/filterSlice";
+import { useDispatch } from "react-redux";
 
-  const inputRef = React.useRef()
+const Search = () => {
+  const dispatch = useDispatch();
+  const [value, SetValue] = React.useState("");
+  const inputRef = React.useRef();
 
   const updateSearchValue = React.useCallback(
     debounce((str) => {
-      SetSerchValue(str)
-    }, 1000), []
-  )
+      dispatch(SetSerchValue(str));
+    }, 1000),
+    []
+  );
 
   const onChangeInput = (event) => {
-    SetValue(event.target.value)
-    updateSearchValue(event.target.value)
-  }
+    SetValue(event.target.value);
+    updateSearchValue(event.target.value);
+  };
 
   const onClickClear = () => {
-    SetSerchValue("")
-    SetValue('')
-    inputRef.current.focus()
-  }
-  
-  
+    dispatch(SetSerchValue(""));
+    SetValue("");
+    inputRef.current.focus();
+  };
+
   return (
     <div className={styles.root}>
       <svg
@@ -43,7 +45,7 @@ const Search = ({ searchValue, SetSerchValue }) => {
         />
       </svg>
       <input
-        ref = {inputRef}
+        ref={inputRef}
         value={value}
         onChange={onChangeInput}
         className={styles.input}
