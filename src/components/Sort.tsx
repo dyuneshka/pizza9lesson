@@ -1,50 +1,46 @@
 import React from "react";
 
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { selectSort } from "./redux/slices/filterSlice";
-
 
 type SortItem = {
   name: string;
   sortProperty: string;
-}
-
+};
 
 export const Sortlist: SortItem[] = [
-    {
-      name: "популярности",
-      sortProperty: "rating",
-    },
-    {
-      name: "популярности(ASC)",
-      sortProperty: "-rating",
-    },
-    {
-      name: "цене",
-      sortProperty: "price",
-    },
-    {
-      name: "цене(ASC)",
-      sortProperty: "-price",
-    },
-    {
-      name: "алфавиту",
-      sortProperty: "title",
-    },
-    {
-      name: "алфавиту(ASC)",
-      sortProperty: "-title",
-    },
-  ];
+  {
+    name: "популярности",
+    sortProperty: "rating",
+  },
+  {
+    name: "популярности(ASC)",
+    sortProperty: "-rating",
+  },
+  {
+    name: "цене",
+    sortProperty: "price",
+  },
+  {
+    name: "цене(ASC)",
+    sortProperty: "-price",
+  },
+  {
+    name: "алфавиту",
+    sortProperty: "title",
+  },
+  {
+    name: "алфавиту(ASC)",
+    sortProperty: "-title",
+  },
+];
 
 type ISortProps = {
-  onChangeSort:  any
-}  
+  onChangeSort: (obj: SortItem) => void;
+};
 
 const Sort: React.FC<ISortProps> = ({ onChangeSort }) => {
-
-
-  const sort = useSelector(selectSort)
+  const sort = useSelector(selectSort);
 
   const [open, Setopen] = React.useState(false);
 
@@ -53,30 +49,24 @@ const Sort: React.FC<ISortProps> = ({ onChangeSort }) => {
     Setopen(!open);
   };
 
-  const sortRef = React.useRef<HTMLDivElement>(null)
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
+    const handClickPopup = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+        Setopen(false);
+      }
+    };
 
-    const handClickPopup = (event: any) => {
-      if(!event.composedPath().includes(sortRef.current)){
-         Setopen(false);
-         console.log('123')
-      }    
+    document.body.addEventListener("click", handClickPopup);
 
-    }
-
-     document.body.addEventListener('click', handClickPopup)
-
-     return () => {
-      document.body.removeEventListener('click', handClickPopup)
-     }
-
-  }, [])
-
-
+    return () => {
+      document.body.removeEventListener("click", handClickPopup);
+    };
+  }, []);
 
   return (
-    <div ref = {sortRef} className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
