@@ -3,7 +3,14 @@ import React from "react";
 import { useSelector} from "react-redux";
 import { selectSort } from "./redux/slices/filterSlice";
 
-export const Sortlist = [
+
+type SortItem = {
+  name: string;
+  sortProperty: string;
+}
+
+
+export const Sortlist: SortItem[] = [
     {
       name: "популярности",
       sortProperty: "rating",
@@ -30,23 +37,27 @@ export const Sortlist = [
     },
   ];
 
-const Sort = ({ value, onChangeSort }) => {
+type ISortProps = {
+  onChangeSort:  any
+}  
+
+const Sort: React.FC<ISortProps> = ({ onChangeSort }) => {
 
 
   const sort = useSelector(selectSort)
 
   const [open, Setopen] = React.useState(false);
 
-  const onClickSelect = (obj) => {
+  const onClickSelect = (obj: SortItem) => {
     onChangeSort(obj);
     Setopen(!open);
   };
 
-  const sortRef = React.useRef()
+  const sortRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
 
-    const handClickPopup = (event) => {
+    const handClickPopup = (event: any) => {
       if(!event.composedPath().includes(sortRef.current)){
          Setopen(false);
          console.log('123')
@@ -65,8 +76,8 @@ const Sort = ({ value, onChangeSort }) => {
 
 
   return (
-    <div ref = {sortRef} class="sort">
-      <div class="sort__label">
+    <div ref = {sortRef} className="sort">
+      <div className="sort__label">
         <svg
           width="10"
           height="6"
@@ -83,7 +94,7 @@ const Sort = ({ value, onChangeSort }) => {
         <span onClick={() => Setopen(!open)}>{sort.name}</span>
       </div>
       {open && (
-        <div class="sort__popup">
+        <div className="sort__popup">
           <ul>
             {Sortlist.map((obj, i) => (
               <li

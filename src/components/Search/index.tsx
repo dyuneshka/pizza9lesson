@@ -8,16 +8,16 @@ import { useDispatch } from "react-redux";
 const Search = () => {
   const dispatch = useDispatch();
   const [value, SetValue] = React.useState("");
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const updateSearchValue = React.useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       dispatch(SetSerchValue(str));
     }, 1000),
     []
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: any) => {
     SetValue(event.target.value);
     updateSearchValue(event.target.value);
   };
@@ -25,7 +25,7 @@ const Search = () => {
   const onClickClear = () => {
     dispatch(SetSerchValue(""));
     SetValue("");
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (

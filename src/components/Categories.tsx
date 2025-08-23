@@ -1,6 +1,12 @@
 import React from "react";
 
-const Categories = ({CategoryId, onClickAddCategories}) => {
+
+type ICategoriesProps = {
+  CategoryId: number;
+  onClickAddCategories: any
+}
+
+const Categories: React.FC<ICategoriesProps> = ({CategoryId, onClickAddCategories}) => {
   
   const category = [
     "Все",
@@ -12,7 +18,7 @@ const Categories = ({CategoryId, onClickAddCategories}) => {
   ];
 
   return (
-    <div class="categories">
+    <div className="categories">
       <ul>
         {category.map((value, i) => (
           <li
