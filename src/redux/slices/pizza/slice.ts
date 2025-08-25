@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { Pizza, PizzaSliceState } from "./type";
 
 export const fetchPizzas = createAsyncThunk <Pizza[], Record<string, string>>(
   "pizza/fetchPizzasStatus",
@@ -13,20 +13,7 @@ export const fetchPizzas = createAsyncThunk <Pizza[], Record<string, string>>(
   }
 );
 
-type Pizza = {
-  id: string;
-  title: string;
-  price: number;
-  sizes: number[];
-  imageUrl: string;
-  types: number[];
-  rating: number;
-};
 
-interface PizzaSliceState {
-  status: "loading" | "success" | "error";
-  items: Pizza[]
-}
 
 const initialState: PizzaSliceState = {
   items: [],
@@ -58,7 +45,7 @@ const PizzasSlice = createSlice({
   },
 });
 
-export const selectPizzas = (state: RootState): any => state.pizzas;
+
 
 export const { SetItems } = PizzasSlice.actions;
 export default PizzasSlice.reducer;

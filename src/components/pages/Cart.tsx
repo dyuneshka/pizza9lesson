@@ -3,7 +3,8 @@ import React from "react";
 import CartItem from "../cartItem";
 import CartEmpty from "../CartEmpty";
 
-import { clearItems, selectCart } from "../redux/slices/cartSlice";
+import { clearItems} from "../../redux/slices/cart/slice";
+import {selectCart} from "../../redux/slices/cart/select"
 
 import { useSelector, useDispatch } from "react-redux";
 

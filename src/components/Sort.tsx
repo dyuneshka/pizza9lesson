@@ -1,8 +1,7 @@
 import React from "react";
 
-
 import { useSelector } from "react-redux";
-import { selectSort } from "./redux/slices/filterSlice";
+import { selectSort } from "../redux/slices/filter/selector";
 
 export type SortProperty = "rating" | "price" | "title" | "-rating" | "-price" | "-title";
 
