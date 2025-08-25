@@ -1,11 +1,14 @@
 import React from "react";
 
+
 import { useSelector } from "react-redux";
 import { selectSort } from "./redux/slices/filterSlice";
 
-type SortItem = {
+export type SortProperty = "rating" | "price" | "title" | "-rating" | "-price" | "-title";
+
+export type SortItem = {
   name: string;
-  sortProperty: string;
+  sortProperty: SortProperty;
 };
 
 export const Sortlist: SortItem[] = [
@@ -39,7 +42,7 @@ type ISortProps = {
   onChangeSort: (obj: SortItem) => void;
 };
 
-const Sort: React.FC<ISortProps> = ({ onChangeSort }) => {
+const Sort: React.FC<ISortProps> = React.memo(({ onChangeSort }) => {
   const sort = useSelector(selectSort);
 
   const [open, Setopen] = React.useState(false);
@@ -102,6 +105,6 @@ const Sort: React.FC<ISortProps> = ({ onChangeSort }) => {
       )}
     </div>
   );
-};
+})
 
 export default Sort;

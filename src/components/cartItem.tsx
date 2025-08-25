@@ -2,7 +2,7 @@ import React from "react";
 
 import { useDispatch } from "react-redux";
 
-import { addItems, minusitem, removeItems } from "./redux/slices/cartSlice";
+import { addItems, CartItems, minusitem, removeItems } from "./redux/slices/cartSlice";
 
 type CartItemProps = {
   id: string;
@@ -28,8 +28,8 @@ const CartItem: React.FC<CartItemProps> = ({
   const onClickPlusItem = () => {
     dispatch(
       addItems({
-        id,
-      })
+        id,   
+      } as CartItems)
     );
   };
 
@@ -53,7 +53,8 @@ const CartItem: React.FC<CartItemProps> = ({
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+        disabled = {count === 1}
           onClick={onClickMinusItem}
           className="button button--outline button--circle cart__item-count-minus"
         >
@@ -73,7 +74,7 @@ const CartItem: React.FC<CartItemProps> = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
         <div
           onClick={onClickPlusItem}

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addItems, selectCartItem } from "../redux/slices/cartSlice";
+import { addItems, CartItems, selectCartItem } from "../redux/slices/cartSlice";
 
 type PizzaBlockProps = {
   id: string;
@@ -12,19 +12,27 @@ type PizzaBlockProps = {
   sizes: number[];
 };
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, price, types, sizes }) => {
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  title,
+  imageUrl,
+  price,
+  types,
+  sizes,
+}) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItem(id));
 
   const addItemCount = cartItem ? cartItem.count : 0;
   const onClickAddItemsCart = () => {
-    const item = {
+    const item: CartItems = {
       id,
       title,
       imageUrl,
       price,
       types: typeNames[activeType],
       sizes: sizes[activeSize],
+      count: 0,
     };
 
     dispatch(addItems(item));
@@ -67,7 +75,11 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, price, typ
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price} ₽</div>
           <button
-            onClick={onClickAddItemsCart}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              onClickAddItemsCart();
+            }}
             className="button button--outline button--add"
           >
             <svg
